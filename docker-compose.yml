@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  react-dev:
+    container_name: react-dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"

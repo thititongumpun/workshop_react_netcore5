@@ -17,14 +17,16 @@ export const HomePage = () => {
         doGetUnansweredQuestions();
     }, []);
     const handleAskQuestionClick = () => {
-        console.log('TODO - move to the AskPage');
+        // console.log('TODO - move to the AskPage');
+        window.location.reload(false);
     };
 
     return (
         <Page>
             <div>
                 <PageTitle>...คำถาม...</PageTitle>
-                <button onClick={handleAskQuestionClick}>Ask a question</button>
+                {/* <button onClick={handleAskQuestionClick}>Ask a question</button> */}
+                <button onClick={handleAskQuestionClick}>Re</button>
             </div>
             {questionsLoading ? (
                 <div>Loading...</div>
