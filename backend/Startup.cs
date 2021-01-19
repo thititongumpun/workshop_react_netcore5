@@ -35,7 +35,7 @@ namespace backend
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                if (!_env.IsProduction())
+                if (_env.IsProduction())
                 {
                     options.UseSqlServer(connectionString);
                 }
