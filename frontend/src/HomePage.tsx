@@ -1,38 +1,50 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import React from 'react';
 import { QuestionList } from './QuestionList';
 import { getUnansweredQuestions, QuestionData } from './data/QuestionsData';
 import { Page } from './Page';
 import { PageTitle } from './PageTitle';
+import { PrimaryButton } from './Styles';
+import { useNavigate } from 'react-router-dom';
 
 export const HomePage = () => {
-    const [questions, setQuestions] = React.useState<QuestionData[]>([]);
-    const [questionsLoading, setQuestionsLoading] = React.useState(true);
+  const [questions, setQuestions] = React.useState<QuestionData[]>([]);
+  const [questionsLoading, setQuestionsLoading] = React.useState(true);
 
-    React.useEffect(() => {
-        const doGetUnansweredQuestions = async () => {
-            const unansweredQuestions = await getUnansweredQuestions();
-            setQuestions(unansweredQuestions);
-            setQuestionsLoading(false);
-        };
-        doGetUnansweredQuestions();
-    }, []);
-    const handleAskQuestionClick = () => {
-        // console.log('TODO - move to the AskPage');
-        window.location.reload(false);
+  React.useEffect(() => {
+    const doGetUnansweredQuestions = async () => {
+      const unansweredQuestions = await getUnansweredQuestions();
+      setQuestions(unansweredQuestions);
+      setQuestionsLoading(false);
     };
+    doGetUnansweredQuestions();
+  }, []);
 
-    return (
-        <Page>
-            <div>
-                <PageTitle>...คำถาม...</PageTitle>
-                {/* <button onClick={handleAskQuestionClick}>Ask a question</button> */}
-                <button onClick={handleAskQuestionClick}>Re</button>
-            </div>
-            {questionsLoading ? (
-                <div>Loading...</div>
-            ) : (
-                    <QuestionList data={questions} />
-                )}
-        </Page>
-    );
+  const navigate = useNavigate();
+  const handleAskQuestionClick = () => {
+    navigate('ask');
+  };
+
+  return (
+    <Page>
+      <div
+        css={css`
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        `}
+      >
+        <PageTitle>....คำถาม.....</PageTitle>
+        <PrimaryButton onClick={handleAskQuestionClick}>
+          Ask a question
+        </PrimaryButton>
+      </div>
+      {questionsLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <QuestionList data={questions} />
+      )}
+    </Page>
+  );
 };

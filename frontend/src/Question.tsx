@@ -1,48 +1,69 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { gray2, gray3 } from './Styles';
+
 import React from 'react';
 import { QuestionData } from './data/QuestionsData';
 
+import { Link } from 'react-router-dom';
+
 interface Props {
-    data: QuestionData;
-    showContent?: boolean;
+  data: QuestionData;
+  showContent?: boolean;
 }
 
-let arr: string[] = ['ไก่ย่าง', 'กระเพรา', 'ผงกะหรี่', 'ทอดกระเทียม', 'ขี้เมา', 'น้ำมันหอย'];
+let arr: string[] = [
+  'ไก่ย่าง',
+  'กระเพรา',
+  'ผงกะหรี่',
+  'ทอดกระเทียม',
+  'ขี้เมา',
+  'น้ำมันหอย',
+  'pizza',
+  'kfc',
+];
+
 let randomArr: string = arr[Math.floor(Math.random() * arr.length)];
 
-// function shuffleFood(arr: string[]) {
-//     let i: number = arr.length - 1;
-//     for (; i > 0; i--) {
-//         const j: any = Math.random() * (i + 1);
-//         const temp: any = arr[i];
-//         arr[i] = arr[j];
-//         arr[j] = temp;
-//     }
-//     return arr;
-// }
+export const Question = ({ data, showContent = true }: Props) => (
+  <div
+    css={css`
+      padding: 10px 0px;
+    `}
+  >
+    <Link
+      css={css`
+        text-decoration: none;
+        color: ${gray2};
+      `}
+      to={`/questions/${data.questionId}`}
+    >
+      {data.title}
+    </Link>
 
-
-
-export const Question = ({ data, showContent }: Props) => (
-    <div>
-        <div>
-            {data.title}
-            </div>
-            {showContent && (
-            <div>
-                {data.content.length > 50
-                ? `${data.content.substring(0, 50)}...`
-                : data.content}
-            </div>
-        )}
-        {randomArr}
-            <div>
-            {`Asked by ${data.userName} on
-                ${data.created.toLocaleDateString()} ${data.created
-                .toLocaleTimeString()}`}
-            </div>
+    {showContent && (
+      <div
+        css={css`
+          padding-bottom: 10px;
+          font-size: 15px;
+          color: ${gray2};
+        `}
+      >
+        {data.content.length > 50
+          ? `${data.content.substring(0, 50)}...`
+          : data.content}
+      </div>
+    )}
+    {randomArr}
+    <div
+      css={css`
+        font-size: 12px;
+        font-style: italic;
+        color: ${gray3};
+      `}
+    >
+      {`Asked by ${data.userName} on
+        ${data.created.toLocaleDateString()} ${data.created.toLocaleTimeString()}`}
     </div>
+  </div>
 );
-
-Question.defaultProps = {
-    showContent: true,
-}
