@@ -26,6 +26,10 @@ export const Question = ({ data, showContent = true }: Props) => {
   ];
   const [random, setRandom] = React.useState('บุฟเฟ่');
 
+  React.useEffect(() => {
+    console.log(random);
+  });
+
   const randomFoods = (e: any) => {
     const len = food.length;
     setRandom(food[Math.floor(Math.random() * len)]);
