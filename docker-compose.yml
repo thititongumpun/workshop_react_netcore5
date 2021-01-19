@@ -1,9 +1,41 @@
 version: "3.9"
+
+networks:
+  local-dev:
+    name: local-dev
+
 services:
-  react-dev:
+  frontend:
     container_name: react-dev
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    networks:
+    - local-dev
+
+  backend:
+    container_name: backend-dev
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:80"
+    depends_on: 
+      - mssql
+    networks:
+      - local-dev
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: mssql
+    ports:
+      - 1434:1433
+    environment: 
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@SSwordformssql
+    networks:
+      - local-dev
+
