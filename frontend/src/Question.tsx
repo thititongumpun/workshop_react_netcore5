@@ -24,6 +24,7 @@ export const Question = ({ data, showContent = true }: Props) => {
     'pizza',
     'kfc',
   ];
+
   const [random, setRandom] = React.useState('บุฟเฟ่');
 
   React.useEffect(() => {
